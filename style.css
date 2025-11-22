@@ -1,0 +1,115 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f0ebe3;
+}
+
+.topo {
+    background-color: #a89f91;
+    color: white;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.topo h1 {
+    margin: 0 0 10px 0;
+}
+
+.menu button {
+    background-color: #e3d9ca;
+    color: #5a5349;
+    border: none;
+    padding: 10px 15px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.pagina {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.escondido {
+    display: none;
+}
+
+form {
+    background-color: #f9f6f0;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #e3d9ca;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    color: #5a5349;
+}
+
+input, select {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px solid #d4c4b0;
+}
+
+button {
+    background-color: #8c7e6e;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    margin-top: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+button[type="button"] {
+    background-color: #b5a693;
+}
+
+.item {
+    background-color: #faf8f5;
+    padding: 10px;
+    margin-bottom: 10px;
+    
+}
+
+.item h4 {
+    margin-top: 0;
+    color: #5a5349;
+}
+
+.item p {
+    margin: 5px 0;
+    color: #7a6f5d;
+}
+
+.botoes {
+    margin-top: 10px;
+}
+
+.btn-editar {
+    background-color: #b5a693;
+    color: white;
+}
+
+.btn-excluir {
+    background-color: #9d8b78;
+    color: white;
+}
+
+.btn-devolver {
+    background-color: #8c7e6e;
+    color: white;
+}
+
+.disponivel {
+    color: #6b7f5f;
+    font-weight: bold;
+}
+
+.emprestado {
+    color: #9d8b78;
+    font-weight: bold;
+}

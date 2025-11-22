@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Biblioteca</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="topo">
+        <h1>Sistema de Biblioteca</h1>
+        <div class="menu">
+            <button onclick="mudarPagina('inicio')">Início</button>
+            <button onclick="mudarPagina('usuarios')">Usuários</button>
+            <button onclick="mudarPagina('livros')">Livros</button>
+            <button onclick="mudarPagina('emprestimos')">Empréstimos</button>
+        </div>
+    </div>
+
+    <!-- Página Início -->
+    <div id="pagina-inicio" class="pagina">
+        <h2>Bem-vindo</h2>
+        <p>Total de Usuários: <span id="contarUsuarios">0</span></p>
+        <p>Total de Livros: <span id="contarLivros">0</span></p>
+        <p>Empréstimos Ativos: <span id="contarEmprestimos">0</span></p>
+    </div>
+
+    <!-- Página Usuários -->
+    <div id="pagina-usuarios" class="pagina escondido">
+        <h2>Cadastro de Usuários</h2>
+        
+        <form id="formUsuario">
+            <input type="hidden" id="idUsuario">
+            <label>Nome Completo:</label>
+            <input type="text" id="nomeUsuario" required>
+            
+            <label>E-mail:</label>
+            <input type="email" id="emailUsuario" required>
+            
+            <button type="submit">Salvar</button>
+            <button type="button" onclick="limparFormUsuario()">Cancelar</button>
+        </form>
+
+        <h3>Lista de Usuários</h3>
+        <div id="listaUsuarios"></div>
+    </div>
+
+    <!-- Página Livros -->
+    <div id="pagina-livros" class="pagina escondido">
+        <h2>Cadastro de Livros</h2>
+        
+        <form id="formLivro">
+            <input type="hidden" id="idLivro">
+            <label>Título:</label>
+            <input type="text" id="tituloLivro" required>
+            
+            <label>Autor:</label>
+            <input type="text" id="autorLivro" required>
+            
+            <label>Ano:</label>
+            <input type="number" id="anoLivro" required>
+            
+            <label>Gênero:</label>
+            <input type="text" id="generoLivro" required>
+            
+            <button type="submit">Salvar</button>
+            <button type="button" onclick="limparFormLivro()">Cancelar</button>
+        </form>
+
+        <h3>Lista de Livros</h3>
+        <div id="listaLivros"></div>
+    </div>
+
+    <!-- Página Empréstimos -->
+    <div id="pagina-emprestimos" class="pagina escondido">
+        <h2>Registrar Empréstimo</h2>
+        
+        <form id="formEmprestimo">
+            <label>Selecione o Usuário:</label>
+            <select id="selectUsuario" required>
+                <option value="">Escolha um usuário</option>
+            </select>
+            
+            <label>Selecione o Livro:</label>
+            <select id="selectLivro" required>
+                <option value="">Escolha um livro</option>
+            </select>
+            
+            <button type="submit">Emprestar</button>
+        </form>
+
+        <h3>Lista de Empréstimos</h3>
+        <div id="listaEmprestimos"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
