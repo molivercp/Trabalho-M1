@@ -1,10 +1,10 @@
 ﻿# Sistema de Biblioteca
 
-Sistema simples de gerenciamento de biblioteca desenvolvido com HTML, CSS e JavaScript Vanilla.
+Sistema simples de gerenciamento de biblioteca desenvolvido com HTML, CSS e JavaScript puro.
 
 ##  Descrição
 
-Este projeto é um sistema básico para controle de biblioteca que permite cadastrar usuários, livros e gerenciar empréstimos. Foi desenvolvido apenas tecnologias web básicas, sem frameworks ou bibliotecas externas.
+Este projeto é um sistema básico para controle de biblioteca que permite cadastrar usuários, livros e gerenciar empréstimos. Foi desenvolvido apenas tecnologias web básicas, sem frameworks ou bibliotecas externas, desenvolvido como projeto final do módulo de lógica de programação do programa (curso) DiverseDEV.
 
 ##  Funcionalidades
 
@@ -18,8 +18,8 @@ Este projeto é um sistema básico para controle de biblioteca que permite cadas
 
 ##  Tecnologias Utilizadas
 
-- HTML5
-- CSS3
+- HTML
+- CSS
 - JavaScript Vanilla 
 - LocalStorage para persistência de dados
 
