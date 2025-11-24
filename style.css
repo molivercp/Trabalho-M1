@@ -4,18 +4,13 @@ body {
     background-color: #f0ebe3;
 }
 
-.topo {
-    background-color: #a89f91;
-    color: white;
-    padding: 15px;
-    margin-bottom: 20px;
-}
+/* Nota: pequenas personalizações de estilo adicionadas por desenvolvedor local */
 
-.topo h1 {
-    margin: 0 0 10px 0;
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f0ebe3;
 }
-
-.menu button {
     background-color: #e3d9ca;
     color: #5a5349;
     border: none;
@@ -112,4 +107,11 @@ button[type="button"] {
 .emprestado {
     color: #9d8b78;
     font-weight: bold;
+}
+
+.rodape {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #5a5349;
+    margin-top: 10px;
 }

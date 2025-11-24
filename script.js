@@ -3,71 +3,67 @@ let usuarios = [];
 let livros = [];
 let emprestimos = [];
 
-
-
-// Quando a página carregar, executa estas funções
-window.onload = function() {
+document.addEventListener('DOMContentLoaded', initApp);
+function initApp() {
     carregarDados();
     mostrarUsuarios();
     mostrarLivros();
     mostrarEmprestimos();
     atualizarNumeros();
-};
+    console.log('initApp: aplicação inicializada');
+}
 
 
-// Troca entre as páginas do sistema
 function mudarPagina(nomePagina) {
-    // Esconde todas as páginas
     let paginas = document.querySelectorAll('.pagina');
     for(let i = 0; i < paginas.length; i++) {
         paginas[i].classList.add('escondido');
     }
     
-    // Mostra só a página escolhida
     document.getElementById('pagina-' + nomePagina).classList.remove('escondido');
     
-    // Se for página de empréstimos, preenche os selects
     if(nomePagina === 'emprestimos') {
         preencherSelects();
     }
     
-    // Se for página inicial, atualiza os números
     if(nomePagina === 'inicio') {
         atualizarNumeros();
     }
 }
 
-// Pega os dados salvos do localStorage
 function carregarDados() {
-    let dadosUsuarios = localStorage.getItem('usuarios');
-    let dadosLivros = localStorage.getItem('livros');
-    let dadosEmprestimos = localStorage.getItem('emprestimos');
-    
-    if(dadosUsuarios) {
-        usuarios = JSON.parse(dadosUsuarios);
-    }
-    if(dadosLivros) {
-        livros = JSON.parse(dadosLivros);
-    }
-    if(dadosEmprestimos) {
-        emprestimos = JSON.parse(dadosEmprestimos);
+    try {
+        let dadosUsuarios = localStorage.getItem('usuarios');
+        let dadosLivros = localStorage.getItem('livros');
+        let dadosEmprestimos = localStorage.getItem('emprestimos');
+
+        if (dadosUsuarios) usuarios = JSON.parse(dadosUsuarios);
+        if (dadosLivros) livros = JSON.parse(dadosLivros);
+        if (dadosEmprestimos) emprestimos = JSON.parse(dadosEmprestimos);
+    } catch (err) {
+        console.warn('carregarDados: falha ao ler localStorage, resetando dados', err);
+        usuarios = [];
+        livros = [];
+        emprestimos = [];
     }
 }
 
-// Salva os dados no localStorage
 function salvarDados() {
     localStorage.setItem('usuarios', JSON.stringify(usuarios));
     localStorage.setItem('livros', JSON.stringify(livros));
     localStorage.setItem('emprestimos', JSON.stringify(emprestimos));
+    console.log('salvarDados: estado salvo (usuarios:%d, livros:%d, emprestimos:%d)', usuarios.length, livros.length, emprestimos.length);
 }
 
-// Cria um ID único usando data e número aleatório
-function gerarId() {
+function gerarIdRegistro() {
     return Date.now() + '-' + Math.floor(Math.random() * 1000);
 }
 
+function mostrarAviso(msg) {
+    alert(msg);
+}
 
-// Processa o formulário de cadastro de usuário
+
 document.getElementById('formUsuario').onsubmit = function(e) {
     e.preventDefault();
     
@@ -75,22 +71,19 @@ document.getElementById('formUsuario').onsubmit = function(e) {
     let nome = document.getElementById('nomeUsuario').value;
     let email = document.getElementById('emailUsuario').value;
     
-    // Valida se os campos estão preenchidos
-    if(nome === '' || email === '') {
-        alert('Preencha todos os campos!');
+    if (nome === '' || email === '') {
+        mostrarAviso('Erro ao salvar usuário: preencha nome e e-mail.');
         return;
     }
     
-    // Se não tem ID, é cadastro novo
-    if(id === '') {
+    if (id === '') {
         let novoUsuario = {
-            id: gerarId(),
+            id: gerarIdRegistro(),
             nome: nome,
             email: email
         };
         usuarios.push(novoUsuario);
     } else {
-        // Se tem ID, é edição
         for(let i = 0; i < usuarios.length; i++) {
             if(usuarios[i].id === id) {
                 usuarios[i].nome = nome;
@@ -105,7 +98,6 @@ document.getElementById('formUsuario').onsubmit = function(e) {
     limparFormUsuario();
 };
 
-// Mostra todos os usuários na tela
 function mostrarUsuarios() {
     let lista = document.getElementById('listaUsuarios');
     lista.innerHTML = '';
@@ -115,7 +107,6 @@ function mostrarUsuarios() {
         return;
     }
     
-    // Percorre o array e cria um item para cada usuário
     for(let i = 0; i < usuarios.length; i++) {
         let usuario = usuarios[i];
         
@@ -133,7 +124,6 @@ function mostrarUsuarios() {
     }
 }
 
-// Carrega os dados do usuário no formulário para editar
 function editarUsuario(id) {
     for(let i = 0; i < usuarios.length; i++) {
         if(usuarios[i].id === id) {
@@ -145,7 +135,6 @@ function editarUsuario(id) {
     }
 }
 
-// Remove um usuário da lista
 function excluirUsuario(id) {
     if(confirm('Deseja realmente excluir este usuário?')) {
         let novaLista = [];
@@ -160,14 +149,12 @@ function excluirUsuario(id) {
     }
 }
 
-// Limpa o formulário de usuário
 function limparFormUsuario() {
     document.getElementById('formUsuario').reset();
     document.getElementById('idUsuario').value = '';
 }
 
 
-// Processa o formulário de cadastro de livro
 document.getElementById('formLivro').onsubmit = function(e) {
     e.preventDefault();
     
@@ -177,16 +164,14 @@ document.getElementById('formLivro').onsubmit = function(e) {
     let ano = document.getElementById('anoLivro').value;
     let genero = document.getElementById('generoLivro').value;
     
-    // Valida se os campos estão preenchidos
-    if(titulo === '' || autor === '' || ano === '' || genero === '') {
-        alert('Preencha todos os campos!');
-        return;
-    }
+        if (titulo === '' || autor === '' || ano === '' || genero === '') {
+            mostrarAviso('Erro ao salvar livro: revise título, autor, ano e gênero.');
+            return;
+        }
     
-    // Se não tem ID, é cadastro novo
-    if(id === '') {
+    if (id === '') {
         let novoLivro = {
-            id: gerarId(),
+            id: gerarIdRegistro(),
             titulo: titulo,
             autor: autor,
             ano: ano,
@@ -195,7 +180,7 @@ document.getElementById('formLivro').onsubmit = function(e) {
         };
         livros.push(novoLivro);
     } else {
-        // Se tem ID, é edição
+
         for(let i = 0; i < livros.length; i++) {
             if(livros[i].id === id) {
                 livros[i].titulo = titulo;
@@ -212,7 +197,6 @@ document.getElementById('formLivro').onsubmit = function(e) {
     limparFormLivro();
 };
 
-// Mostra todos os livros na tela
 function mostrarLivros() {
     let lista = document.getElementById('listaLivros');
     lista.innerHTML = '';
@@ -222,11 +206,9 @@ function mostrarLivros() {
         return;
     }
     
-    // Percorre o array e cria um item para cada livro
     for(let i = 0; i < livros.length; i++) {
         let livro = livros[i];
         
-        // Define se está disponível ou emprestado
         let status = livro.disponivel ? '<span class="disponivel">Disponível</span>' : '<span class="emprestado">Emprestado</span>';
         
         let div = document.createElement('div');
@@ -245,7 +227,6 @@ function mostrarLivros() {
     }
 }
 
-// Carrega os dados do livro no formulário para editar
 function editarLivro(id) {
     for(let i = 0; i < livros.length; i++) {
         if(livros[i].id === id) {
@@ -259,7 +240,6 @@ function editarLivro(id) {
     }
 }
 
-// Remove um livro da lista
 function excluirLivro(id) {
     if(confirm('Deseja realmente excluir este livro?')) {
         let novaLista = [];
@@ -274,7 +254,6 @@ function excluirLivro(id) {
     }
 }
 
-// Limpa o formulário de livro
 function limparFormLivro() {
     document.getElementById('formLivro').reset();
     document.getElementById('idLivro').value = '';
@@ -282,20 +261,17 @@ function limparFormLivro() {
 
 
 
-// Processa o formulário de empréstimo
 document.getElementById('formEmprestimo').onsubmit = function(e) {
     e.preventDefault();
     
     let idUsuario = document.getElementById('selectUsuario').value;
     let idLivro = document.getElementById('selectLivro').value;
     
-    // Valida se foi selecionado usuário e livro
-    if(idUsuario === '' || idLivro === '') {
-        alert('Selecione usuário e livro!');
+    if (idUsuario === '' || idLivro === '') {
+        mostrarAviso('Selecione um usuário e um livro antes de emprestar.');
         return;
     }
     
-    // Verifica se o livro está disponível
     let livroDisponivel = false;
     for(let i = 0; i < livros.length; i++) {
         if(livros[i].id === idLivro && livros[i].disponivel) {
@@ -305,14 +281,13 @@ document.getElementById('formEmprestimo').onsubmit = function(e) {
         }
     }
     
-    if(!livroDisponivel) {
-        alert('Este livro não está disponível!');
+    if (!livroDisponivel) {
+        mostrarAviso('Operação cancelada: o livro selecionado não está disponível no momento.');
         return;
     }
     
-    // Cria o empréstimo
     let novoEmprestimo = {
-        id: gerarId(),
+        id: gerarIdRegistro(),
         idUsuario: idUsuario,
         idLivro: idLivro,
         data: new Date().toLocaleDateString('pt-BR'),
@@ -327,7 +302,6 @@ document.getElementById('formEmprestimo').onsubmit = function(e) {
     document.getElementById('formEmprestimo').reset();
 };
 
-// Mostra todos os empréstimos na tela
 function mostrarEmprestimos() {
     let lista = document.getElementById('listaEmprestimos');
     lista.innerHTML = '';
@@ -337,11 +311,9 @@ function mostrarEmprestimos() {
         return;
     }
     
-    // Percorre o array e cria um item para cada empréstimo
     for(let i = 0; i < emprestimos.length; i++) {
         let emprestimo = emprestimos[i];
         
-        // Busca o nome do usuário
         let nomeUsuario = '';
         for(let j = 0; j < usuarios.length; j++) {
             if(usuarios[j].id === emprestimo.idUsuario) {
@@ -350,7 +322,6 @@ function mostrarEmprestimos() {
             }
         }
         
-        // Busca o título do livro
         let tituloLivro = '';
         for(let k = 0; k < livros.length; k++) {
             if(livros[k].id === emprestimo.idLivro) {
@@ -359,7 +330,6 @@ function mostrarEmprestimos() {
             }
         }
         
-        // Define o status e botão de devolução
         let status = emprestimo.ativo ? 'Ativo' : 'Devolvido';
         let botaoDevolver = emprestimo.ativo ? '<button class="btn-devolver" onclick="devolverLivro(\'' + emprestimo.id + '\')">Devolver</button>' : '';
         
@@ -375,14 +345,12 @@ function mostrarEmprestimos() {
     }
 }
 
-// Registra a devolução de um livro
 function devolverLivro(idEmprestimo) {
-    // Busca o empréstimo e marca como devolvido
+
     for(let i = 0; i < emprestimos.length; i++) {
         if(emprestimos[i].id === idEmprestimo && emprestimos[i].ativo) {
             emprestimos[i].ativo = false;
             
-            // Marca o livro como disponível novamente
             let idLivro = emprestimos[i].idLivro;
             for(let j = 0; j < livros.length; j++) {
                 if(livros[j].id === idLivro) {
@@ -399,12 +367,10 @@ function devolverLivro(idEmprestimo) {
     mostrarLivros();
 }
 
-// Preenche os selects de usuário e livro
 function preencherSelects() {
     let selectUsuario = document.getElementById('selectUsuario');
     let selectLivro = document.getElementById('selectLivro');
     
-    // Preenche select de usuários
     selectUsuario.innerHTML = '<option value="">Escolha um usuário</option>';
     for(let i = 0; i < usuarios.length; i++) {
         let option = document.createElement('option');
@@ -413,7 +379,6 @@ function preencherSelects() {
         selectUsuario.appendChild(option);
     }
     
-    // Preenche select de livros (somente disponíveis)
     selectLivro.innerHTML = '<option value="">Escolha um livro</option>';
     for(let i = 0; i < livros.length; i++) {
         if(livros[i].disponivel) {
@@ -426,14 +391,11 @@ function preencherSelects() {
 }
 
 
-// ==================== TELA INICIAL ====================
 
-// Atualiza os números da tela inicial
 function atualizarNumeros() {
     document.getElementById('contarUsuarios').textContent = usuarios.length;
     document.getElementById('contarLivros').textContent = livros.length;
     
-    // Conta quantos empréstimos estão ativos
     let emprestimosAtivos = 0;
     for(let i = 0; i < emprestimos.length; i++) {
         if(emprestimos[i].ativo) {
